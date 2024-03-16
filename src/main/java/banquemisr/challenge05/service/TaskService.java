@@ -1,10 +1,18 @@
 package banquemisr.challenge05.service;
 
+import banquemisr.challenge05.exception.ExceptionList;
+import banquemisr.challenge05.exception.RecordNotFoundException;
 import banquemisr.challenge05.model.entity.Task;
+import banquemisr.challenge05.model.filter.TaskFilter;
 import banquemisr.challenge05.model.payload.CreateTaskRequest;
 import banquemisr.challenge05.model.payload.UpdateTaskRequest;
+import banquemisr.challenge05.model.specification.TaskSpecification;
 import banquemisr.challenge05.repository.TaskRepository;
+import banquemisr.challenge05.utils.ObjectChecker;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,7 +37,7 @@ public class TaskService {
 
     public Task updateTask(UpdateTaskRequest request, Long taskId){
         try {
-            Task task = taskRepository.findById(taskId).orElseThrow(() -> new Exception("Record not found"));
+            Task task = taskRepository.findById(taskId).orElseThrow(() -> new RecordNotFoundException(ExceptionList.RECORD_NOT_FOUND));
             task.setTitle(request.getTitle());
             task.setDescription(request.getDescription());
             task.setStatus(request.getStatus());
@@ -50,5 +58,43 @@ public class TaskService {
     public List<Task> getTasks(){
         List<Task> tasks = taskRepository.findAll();
         return tasks;
+    }
+
+    public List<Task> getTasks(TaskFilter filter){
+        if(filter.getOffset() == 0 ){
+            filter.setOffset(0);
+        }
+        if(filter.getLimit() == 0){
+            filter.setLimit(3);
+        }
+        Specification<Task> specification = buildSpecification(filter);
+        PageRequest pageRequest = buildPagination(filter);
+        List<Task> tasks = executeSpecification(specification, filter, pageRequest);
+        return tasks;
+    }
+
+    private PageRequest buildPagination(TaskFilter filter){
+
+        return PageRequest.of(filter.getOffset(), filter.getLimit());
+    }
+
+    private Specification<Task> buildSpecification(TaskFilter filter){
+
+        return Specification.where(
+                TaskSpecification.dueDateBefore(filter.getDueDate())
+                        .and(TaskSpecification.priority(filter.getPriority()))
+                        .and(TaskSpecification.status(filter.getStatus()))
+                        .and(TaskSpecification.searchWord(filter.getSearchField()))
+        );
+    }
+
+    private List<Task> executeSpecification(Specification<Task> specification, TaskFilter filter, PageRequest pageRequest){
+
+        Page<Task> page;
+        if (ObjectChecker.isEmptyOrNull(filter))
+            page = taskRepository.findAll(pageRequest);
+        else
+            page = taskRepository.findAll(specification, pageRequest);
+        return page.getContent();
     }
 }

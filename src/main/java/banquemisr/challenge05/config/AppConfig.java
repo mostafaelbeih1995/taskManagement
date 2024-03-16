@@ -1,5 +1,7 @@
 package banquemisr.challenge05.config;
 
+import banquemisr.challenge05.exception.ExceptionList;
+import banquemisr.challenge05.exception.NoUserFoundException;
 import banquemisr.challenge05.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +25,7 @@ public class AppConfig {
     public UserDetailsService userDetailsService(){
 
         return username -> userRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                .orElseThrow(() -> new NoUserFoundException(ExceptionList.USER_NOT_FOUND));
     }
 
     @Bean

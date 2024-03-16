@@ -20,7 +20,7 @@ import java.util.List;
 @Builder
 @Table(name = "_user")
 @SQLRestriction("deleted <> true")
-@SQLDelete(sql = "UPDATE {h-schema} user SET deleted = true WHERE id = ?", check = ResultCheckStyle.COUNT)
+@SQLDelete(sql = "UPDATE {h-schema} _user SET deleted = true WHERE id = ?", check = ResultCheckStyle.COUNT)
 @NoArgsConstructor
 @AllArgsConstructor
 public class User extends BaseEntity implements UserDetails {

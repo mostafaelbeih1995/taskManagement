@@ -29,7 +29,7 @@ public class AuthService {
                 .secondName(request.getSecondName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.USER)
+                .role(Role.ROLE_USER)
                 .build();
         userRepository.save(user);
         String token = jwtUtils.generateToken(user);
