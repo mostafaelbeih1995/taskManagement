@@ -17,10 +17,13 @@
 ## Improvements
 
 - I am a little bit tight on time and I know there is a lot of modification and enhancements that needs to be done if I have more time including
-    - Add Logging with meaningful messages that will clarify what is happening in the system in order to be able to debug on higher environments
-    - Add DAO layer between Database and Endpoints with mapping between them using MapStruct for example
+     - Add Logging with meaningful messages that will clarify what is happening in the system in order to be able to debug on higher environments
+     - Enhance Validation to cover all failures in the system with custom messages
+     - Add DAO layer between Database and Endpoints with mapping between them using MapStruct for example
      - Add Api documentation so it's clear what are the endpoints the system exposes and what roles can access what endpoints
      - Add unit test to cover all test cases scenarios
      - Add Sending email functionality
+     - Dockerizing the microservice
+     - These are just a part of the improvments that can be done, there is much more I believe
 
 
