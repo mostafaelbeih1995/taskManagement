@@ -3,18 +3,24 @@ package banquemisr.challenge05.service;
 import banquemisr.challenge05.exception.ExceptionList;
 import banquemisr.challenge05.exception.RecordNotFoundException;
 import banquemisr.challenge05.model.entity.Task;
+import banquemisr.challenge05.model.enums.Status;
 import banquemisr.challenge05.model.filter.TaskFilter;
 import banquemisr.challenge05.model.payload.CreateTaskRequest;
+import banquemisr.challenge05.model.payload.MailRequest;
+import banquemisr.challenge05.model.payload.MailResponse;
 import banquemisr.challenge05.model.payload.UpdateTaskRequest;
 import banquemisr.challenge05.model.specification.TaskSpecification;
 import banquemisr.challenge05.repository.TaskRepository;
+import banquemisr.challenge05.service.email.EmailService;
 import banquemisr.challenge05.utils.ObjectChecker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -22,6 +28,7 @@ import java.util.List;
 public class TaskService {
 
     private final TaskRepository taskRepository;
+    private final EmailService emailService;
 
     public Task createTask(CreateTaskRequest request){
         Task task = Task.builder()
@@ -96,5 +103,23 @@ public class TaskService {
         else
             page = taskRepository.findAll(specification, pageRequest);
         return page.getContent();
+    }
+
+//    @Scheduled(cron = "0 0 8 * * *")
+//    @Scheduled(fixedRate = 20000)
+    private void sendEmailForTasks(){
+
+        LocalDateTime dueDate = LocalDateTime.now().plusDays(7);
+        List<Task> tasks = taskRepository.findByDueDateBeforeAndStatusNot(dueDate, Status.DONE);
+        MailRequest request = new MailRequest();
+        request.setName("Tickets needs to be done");
+        request.setSubject("Work on these texts");
+        StringBuilder body = new StringBuilder();
+        for(Task task : tasks){
+
+            body.append(task.getTitle()).append("\n").append(task.getStatus()).append("\n");
+        }
+        request.setTemplate(body.toString());
+        MailResponse response = emailService.sendEmail(request);
     }
 }
