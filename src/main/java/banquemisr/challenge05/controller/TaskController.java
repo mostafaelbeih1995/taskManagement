@@ -33,6 +33,7 @@ public class TaskController {
     public Task updateTask(@RequestBody @Valid UpdateTaskRequest request, @PathVariable Long taskId){
         return taskService.updateTask(request, taskId);
     }
+
     @GetMapping
     public List<Task> getTasks(@RequestBody @Valid TaskFilter filter){
 

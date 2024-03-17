@@ -8,5 +8,6 @@ public class ExceptionList {
     public static final String INVALID_ARGUMENT = "INVALID_ARGUMENT";
     public static final String EXPIRED_TOKEN = "EXPIRED_TOKEN";
     public static final String ACCESS_DENIED = "ACCESS_DENIED";
+    public static final String EMAIL_EXISTS = "EMAIL_EXISTS";
 
 }

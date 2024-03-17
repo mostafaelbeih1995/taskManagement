@@ -18,10 +18,7 @@ public class UpdateTaskRequest {
 
     private String title;
     private String description;
-    @NotNull
     private Priority priority;
-    @NotNull
     private Status status;
-    @NotNull
     private LocalDateTime dueDate;
 }

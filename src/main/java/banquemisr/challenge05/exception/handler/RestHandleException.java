@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
 //import java.nio.file.AccessDeniedException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.*;
 
 @ControllerAdvice
@@ -57,6 +58,13 @@ public class RestHandleException {
     public ResponseEntity<Object> handleAccessDeniedException(AccessDeniedException ex) {
         Map<String, Object> errors = new HashMap<>();
         String message = prepareMessages(ExceptionList.ACCESS_DENIED);
+        return handleErrorResponse(message, ex.getClass().getSimpleName(), errors, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+    public ResponseEntity<Object> handleSQLIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException ex) {
+        Map<String, Object> errors = new HashMap<>();
+        String message = prepareMessages(ExceptionList.EMAIL_EXISTS);
         return handleErrorResponse(message, ex.getClass().getSimpleName(), errors, HttpStatus.BAD_REQUEST);
     }
 

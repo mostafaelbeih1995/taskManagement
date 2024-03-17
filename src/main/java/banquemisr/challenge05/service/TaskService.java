@@ -45,15 +45,30 @@ public class TaskService {
     public Task updateTask(UpdateTaskRequest request, Long taskId){
         try {
             Task task = taskRepository.findById(taskId).orElseThrow(() -> new RecordNotFoundException(ExceptionList.RECORD_NOT_FOUND));
-            task.setTitle(request.getTitle());
-            task.setDescription(request.getDescription());
-            task.setStatus(request.getStatus());
-            task.setPriority(request.getPriority());
-            task.setDueDate(request.getDueDate());
+            prepateTaskData(request, task);
             taskRepository.save(task);
             return task;
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private void prepateTaskData(UpdateTaskRequest request, Task task){
+
+        if(ObjectChecker.isNotEmptyOrNull(request.getDescription())){
+            task.setDescription(request.getDescription());
+        }
+        if(ObjectChecker.isNotEmptyOrNull(request.getTitle())){
+            task.setTitle(request.getTitle());
+        }
+        if(ObjectChecker.isNotEmptyOrNull(request.getStatus())){
+            task.setStatus(request.getStatus());
+        }
+        if(ObjectChecker.isNotEmptyOrNull(request.getPriority())){
+            task.setPriority(request.getPriority());
+        }
+        if(ObjectChecker.isNotEmptyOrNull(request.getDueDate())){
+            task.setDueDate(request.getDueDate());
         }
     }
 
