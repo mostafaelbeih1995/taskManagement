@@ -18,7 +18,7 @@ import java.util.function.Function;
 public class JwtUtils {
 
     private static final String secret = "asdfasdvasdvaebadfsvafbasrfgfbasfdvadfasdbasgasdvaffb";
-    private String expirationTime = "1000";
+    private String expirationTime = "10000";
     private Key key;
 
     @PostConstruct

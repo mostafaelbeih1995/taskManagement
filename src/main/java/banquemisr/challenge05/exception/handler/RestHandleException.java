@@ -5,16 +5,20 @@ import banquemisr.challenge05.exception.ExceptionList;
 import banquemisr.challenge05.exception.NoUserFoundException;
 import banquemisr.challenge05.model.payload.ApiResponse;
 import banquemisr.challenge05.model.payload.ErrorPayload;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
+//import java.nio.file.AccessDeniedException;
 import java.util.*;
 
 @ControllerAdvice
@@ -48,6 +52,12 @@ public class RestHandleException {
         }
         String message = prepareMessages(ex.getMessage());
         return handleErrorResponse(message, ex.getClass().getSimpleName(), errors, ex.getStatus());
+    }
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<Object> handleAccessDeniedException(AccessDeniedException ex) {
+        Map<String, Object> errors = new HashMap<>();
+        String message = prepareMessages(ExceptionList.ACCESS_DENIED);
+        return handleErrorResponse(message, ex.getClass().getSimpleName(), errors, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(NoUserFoundException.class)
