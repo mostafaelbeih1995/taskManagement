@@ -25,7 +25,10 @@ There are two ways to run the system
 ## Testing the project
 
 - Open localhost: http://localhost:8080/h2-console/ to view the database
-- Enter the following credentials: username: sa, password: admin, database path : jdbc:h2:mem:testdb
+- Enter the following credentials:
+    - **username: sa**
+    - **password: admin**
+    - **database path : jdbc:h2:mem:testdb**
  ![image](https://github.com/mostafaelbeih1995/taskManagement/assets/26060891/b87bbfaa-55a0-4515-8cc1-fba55e21f1cc)
 
 - You can use the attached postman collection "" to test the different endpoints of the system
