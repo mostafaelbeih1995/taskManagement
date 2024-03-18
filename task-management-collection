@@ -25,6 +25,9 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -103,6 +106,9 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -495,7 +501,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtb3N0YWZhQGdtYWlsLmNvbSIsImlhdCI6MTcxMDcwMTE5NSwiZXhwIjoxNzEwNzExMTk1fQ.MJ0Xja-OyGmxoEo8TtQXiAyXseyeNPi9Tb0MXJF_s6Y",
+				"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtb3N0YWZhQGdtYWlsLmNvbSIsImlhdCI6MTcxMDcxMzc2MywiZXhwIjoxNzEwNzIzNzYzfQ.U4yoQog8OA1x3C9_P92cZeWw107jGLy_M01CF3Ad2hs",
 				"type": "string"
 			}
 		]
