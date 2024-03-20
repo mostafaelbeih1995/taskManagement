@@ -420,6 +420,81 @@
 			]
 		},
 		{
+			"name": "Search tasks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"offset\": 0,\r\n    \"limit\": 3,\r\n    \"priority\": \"LOW\",\r\n    \"searchField\": \"Title 5\"\r\n    // add here whatever filters you want\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/tasks/search",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tasks",
+						"search"
+					]
+				},
+				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+			},
+			"response": [
+				{
+					"name": "Search tasks",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"offset\": 0,\r\n    \"limit\": 3,\r\n    \"priority\": \"LOW\",\r\n    \"searchField\": \"Title 5\"\r\n    // add here whatever filters you want\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/tasks/search",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tasks",
+								"search"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
 			"name": "Get tasks",
 			"event": [
 				{
@@ -443,7 +518,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"offset\": 0,\r\n    \"limit\": 5\r\n    //add here whatever filters you want\r\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -451,13 +526,23 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/tasks",
+					"raw": "localhost:8080/tasks?offset=0&limit=2",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
 						"tasks"
+					],
+					"query": [
+						{
+							"key": "offset",
+							"value": "0"
+						},
+						{
+							"key": "limit",
+							"value": "2"
+						}
 					]
 				},
 				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
@@ -492,6 +577,46 @@
 					"header": null,
 					"cookie": [],
 					"body": null
+				},
+				{
+					"name": "Get tasks",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/tasks?offset=0&limit=2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
 				}
 			]
 		}
@@ -501,7 +626,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtb3N0YWZhQGdtYWlsLmNvbSIsImlhdCI6MTcxMDc2NzY1MCwiZXhwIjoxNzEwNzc3NjUwfQ.7IjfZ_jTpsz9n5oyETB1MSqZWpbYxr7sa2SMmysF9jI",
+				"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtb3N0YWZhQGdtYWlsLmNvbSIsImlhdCI6MTcxMDk3MDk5MiwiZXhwIjoxNzEwOTgwOTkyfQ.qvy0TvQC6V9iLKsxbhUvUahwtWdSI9caR3PNRAKev8I",
 				"type": "string"
 			}
 		]

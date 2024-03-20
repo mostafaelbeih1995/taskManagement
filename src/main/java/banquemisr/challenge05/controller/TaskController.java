@@ -34,10 +34,16 @@ public class TaskController {
         return taskService.updateTask(request, taskId);
     }
 
-    @GetMapping
-    public List<Task> getTasks(@RequestBody @Valid TaskFilter filter){
+    @PostMapping("/search")
+    public List<Task> searchTasks(@RequestBody @Valid TaskFilter filter){
 
-        return taskService.getTasks(filter);
+        return taskService.searchTasks(filter);
+    }
+
+    @GetMapping
+    public List<Task> getTasks(@RequestParam(value = "offset", defaultValue = "0") int offset, @RequestParam(value = "limit", defaultValue = "5") int limit){
+
+        return taskService.getTasks(offset, limit);
     }
 
     @DeleteMapping("/{id}")
