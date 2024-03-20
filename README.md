@@ -2,7 +2,7 @@
 
 ## Running the system
 
-There are two ways to run the system
+There are three ways to run the system
 
 ### Cloning the repo
 
@@ -12,6 +12,11 @@ There are two ways to run the system
  ![image](https://github.com/mostafaelbeih1995/taskManagement/assets/26060891/6f7b6dcb-8ede-4075-9172-07b54f7e21e5)
 
 - Now run the program
+
+### Pulling Docker image from online repo
+
+- Use docker pull command to pull the image **docker pull mostafaelbeih1995/task-management**
+- **docker run --name task-management -d -p 8080:8080 mostafaelbeih1995/task-management**
 
 ### Running Docker image
 
@@ -46,7 +51,7 @@ There are two ways to run the system
      - Add Api documentation so it's clear what are the endpoints the system exposes and what roles can access what endpoints
      - Add unit test to cover all test cases scenarios
      - Add Sending email functionality
-     - Dockerizing the microservice
+     - Make sensitive configuration being read from system variables or using a configration server
      - These are just a part of the improvments that can be done, there is much more I believe
 
 

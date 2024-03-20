@@ -17,7 +17,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -77,27 +76,26 @@ public class TaskService {
         taskRepository.deleteById(id);
     }
 
-    public List<Task> getTasks(){
-        List<Task> tasks = taskRepository.findAll();
-        return tasks;
-    }
-
-    public List<Task> getTasks(TaskFilter filter){
-        if(filter.getOffset() == 0 ){
-            filter.setOffset(0);
-        }
-        if(filter.getLimit() == 0){
-            filter.setLimit(3);
-        }
+    public List<Task> searchTasks(TaskFilter filter){
         Specification<Task> specification = buildSpecification(filter);
         PageRequest pageRequest = buildPagination(filter);
         List<Task> tasks = executeSpecification(specification, filter, pageRequest);
         return tasks;
     }
 
+    public List<Task> getTasks(int offset, int limit){
+        PageRequest pageRequest = buildPagination(offset, limit);
+        return executePagination(pageRequest);
+    }
+
     private PageRequest buildPagination(TaskFilter filter){
 
         return PageRequest.of(filter.getOffset(), filter.getLimit());
+    }
+
+    private PageRequest buildPagination(int offset, int limit){
+
+        return PageRequest.of(offset, limit);
     }
 
     private Specification<Task> buildSpecification(TaskFilter filter){
@@ -120,8 +118,11 @@ public class TaskService {
         return page.getContent();
     }
 
-//    @Scheduled(cron = "0 0 8 * * *")
-//    @Scheduled(fixedRate = 20000)
+    private List<Task> executePagination(PageRequest pageRequest){
+        return taskRepository.findAll(pageRequest).getContent();
+    }
+//    @Scheduled(cron = "0 0 8 * * *") //everyday at 8 AM
+//    @Scheduled(fixedRate = 20000) //for testing purposes
     private void sendEmailForTasks(){
 
         LocalDateTime dueDate = LocalDateTime.now().plusDays(7);
